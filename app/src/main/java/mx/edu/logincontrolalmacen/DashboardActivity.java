@@ -14,6 +14,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import mx.edu.logincontrolalmacen.api.ApiResponse;
@@ -35,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ListView listView;
     private PartAdapter adapter;
     private List<Part> parts = new ArrayList<>();
+    private List<Part> originalParts = new ArrayList<>();
     private ApiService apiService;
     private String token;
 
@@ -68,7 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.171.138:8000/api/")  // Reemplaza con la URL de tu API
+                .baseUrl("http://192.168.1.6:8000/api/")  // Reemplaza con la URL de tu API
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(getClientWithAuthHeader(token))
                 .build();
@@ -82,12 +85,15 @@ public class DashboardActivity extends AppCompatActivity {
                 return false;
             }
 
+
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchParts(newText);
+                adapter.filter(newText);
                 return false;
             }
+
         });
+
 
         // Cargar datos iniciales
         loadInitialData();
@@ -141,7 +147,16 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("DashboardActivity", "Initial Data Response: " + response.body().toString());
-                    adapter.updateData(response.body().getData());
+                    originalParts = response.body().getData();
+
+                    Collections.sort(originalParts, new Comparator<Part>() {
+                        @Override
+                        public int compare(Part p1, Part p2) {
+                            return p1.getName().compareToIgnoreCase(p2.getName());
+                        }
+                    });
+
+                    adapter.updateData(originalParts);
                 } else {
                     try {
                         Log.d("DashboardActivity", "Initial Data Response Error: " + response.errorBody().string());

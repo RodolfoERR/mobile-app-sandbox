@@ -11,14 +11,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mx.edu.logincontrolalmacen.api.Part;
 
 public class PartAdapter extends ArrayAdapter<Part> {
 
+    private List<Part> originalParts;
+    private List<Part> filteredParts;
+
     public PartAdapter(Context context, List<Part> parts) {
         super(context, 0, parts);
+        this.originalParts = new ArrayList<>(parts);
+        this.filteredParts = new ArrayList<>(parts);
     }
 
     @Override
@@ -39,8 +45,25 @@ public class PartAdapter extends ArrayAdapter<Part> {
     }
 
     public void updateData(List<Part> parts) {
+        originalParts.clear();
+        originalParts.addAll(parts);
+        filter("");  // Reset the filtered data to show all parts
+        notifyDataSetChanged();
+    }
+
+    public void filter(String query) {
+        filteredParts.clear();
+        if (query.isEmpty()) {
+            filteredParts.addAll(originalParts);
+        } else {
+            for (Part part : originalParts) {
+                if (part.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredParts.add(part);
+                }
+            }
+        }
         clear();
-        addAll(parts);
+        addAll(filteredParts);
         notifyDataSetChanged();
     }
 }

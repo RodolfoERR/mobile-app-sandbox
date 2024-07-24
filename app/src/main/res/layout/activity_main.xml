@@ -58,17 +58,6 @@
         android:background="@android:drawable/edit_text"
         />
 
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="¿Olvidaste la contraseña?"
-        android:textColor="#007EE5"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true" />
 
     <!-- Botón de login -->
     <Button
