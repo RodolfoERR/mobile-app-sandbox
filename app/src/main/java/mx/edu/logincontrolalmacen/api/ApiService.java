@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -13,6 +14,10 @@ public interface ApiService {
 
     @GET("v1/refactions/all-minus")
     Call<ApiResponse> searchParts(@Query("name") String name);
+
+    @GET("v1/refactions/by/{id}")
+    Call<PartDetailResponse> getPartDetails(@Path("id") int id);
+
 }
 
 

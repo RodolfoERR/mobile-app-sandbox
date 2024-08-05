@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8000/api/")  // Reemplaza con la URL de tu API
+                .baseUrl("http://64.23.200.218/api/")  // Reemplaza con la URL de tu API
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -6,6 +6,7 @@ public class Part {
     private String name;
     private String image_url;
     private Type type;
+    private int active;
 
     // Getters and setters
 
@@ -39,6 +40,14 @@ public class Part {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
     }
 
     // Inner class for Type

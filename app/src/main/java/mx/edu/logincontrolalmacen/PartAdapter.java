@@ -2,6 +2,7 @@
 package mx.edu.logincontrolalmacen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,13 @@ public class PartAdapter extends ArrayAdapter<Part> {
 
     private List<Part> originalParts;
     private List<Part> filteredParts;
+    private String token;
 
-    public PartAdapter(Context context, List<Part> parts) {
+    public PartAdapter(Context context, List<Part> parts, String token) {
         super(context, 0, parts);
         this.originalParts = new ArrayList<>(parts);
         this.filteredParts = new ArrayList<>(parts);
+        this.token = token;
     }
 
     @Override
@@ -40,6 +43,16 @@ public class PartAdapter extends ArrayAdapter<Part> {
 
         nameTextView.setText(part.getName());
         Glide.with(getContext()).load(part.getImageUrl()).into(imageView);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PartDetailActivity.class);
+                intent.putExtra("id", part.getId());
+                intent.putExtra("TOKEN", token); // Pasar el token
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }

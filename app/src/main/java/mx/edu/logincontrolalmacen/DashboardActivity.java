@@ -56,8 +56,10 @@ public class DashboardActivity extends AppCompatActivity {
         searchView = findViewById(R.id.searchView);
         listView = findViewById(R.id.listView);
 
-        adapter = new PartAdapter(this, parts);
+        // Crear el adaptador con el token
+        adapter = new PartAdapter(this, parts, token);
         listView.setAdapter(adapter);
+
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -71,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8000/api/")  // Reemplaza con la URL de tu API
+                .baseUrl("http://64.23.200.218/api/")  // Reemplaza con la URL de tu API
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(getClientWithAuthHeader(token))
                 .build();
@@ -148,6 +150,11 @@ public class DashboardActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("DashboardActivity", "Initial Data Response: " + response.body().toString());
                     originalParts = response.body().getData();
+
+                    // Imprimir JSON de la respuesta
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String jsonResponse = gson.toJson(response.body());
+                    Log.d("DashboardActivity", "JSON Response: " + jsonResponse);
 
                     Collections.sort(originalParts, new Comparator<Part>() {
                         @Override
