@@ -53,7 +53,7 @@ public class PartDetailActivity extends AppCompatActivity {
 
             // Inicializa Retrofit y ApiService
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://64.23.200.218/api/")  // Reemplaza con la URL de tu API
+                    .baseUrl("https://quintaesencia.website/api/")  // Reemplaza con la URL de tu API
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getClientWithAuthHeader(token))
                     .build();

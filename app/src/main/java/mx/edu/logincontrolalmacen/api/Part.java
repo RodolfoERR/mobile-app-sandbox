@@ -4,7 +4,7 @@ package mx.edu.logincontrolalmacen.api;
 public class Part {
     private int id;
     private String name;
-    private String image_url;
+    private String image;
     private Type type;
     private int active;
 
@@ -27,11 +27,11 @@ public class Part {
     }
 
     public String getImageUrl() {
-        return image_url;
+        return image;
     }
 
     public void setImageUrl(String image_url) {
-        this.image_url = image_url;
+        this.image = image_url;
     }
 
     public Type getType() {
